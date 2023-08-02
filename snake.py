@@ -1,5 +1,7 @@
 from turtle import Turtle, Screen
 import time 
+
+STARTING_POSITIONS = [(0,0), (-20,0), (-40,0)]
 MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
@@ -12,15 +14,20 @@ class Snake:
         self.fill_segments()
         self.head = self.body[0]
 
+    def add_segment(self, position):
+        new_turtle = Turtle(shape = "square")
+        new_turtle.fillcolor("white")
+        new_turtle.penup()
+        new_turtle.goto(position)
+        self.body.append(new_turtle)
     #function used to intit body :
     #list of body parts 
     def fill_segments(self):
-        for i in range(3):
-            new_turtle = Turtle(shape = "square")
-            new_turtle.fillcolor("white")
-            new_turtle.penup()
-            new_turtle.goto(i*-20,0)
-            self.body.append(new_turtle)
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+
+    def extend(self):
+        self.add_segment(self.body[-1].position())
 
     #function used to move the body uses the init list
     def move(self):
@@ -30,6 +37,7 @@ class Snake:
             self.body[seg_num].goto(new_x, new_y)
 
         self.body[0].forward(MOVE_DISTANCE)
+    
     
     def up(self):
         #Don't want movement backwards
