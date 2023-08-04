@@ -25,6 +25,13 @@ class Snake:
     def fill_segments(self):
         for position in STARTING_POSITIONS:
             self.add_segment(position)
+    
+    def reset_snake(self):
+        for bod in self.body:
+            bod.goto(1000, 1000)
+        self.body.clear()
+        self.fill_segments()
+        self.head = self.body[0]
 
     def extend(self):
         self.add_segment(self.body[-1].position())
@@ -36,7 +43,7 @@ class Snake:
             new_y = self.body[seg_num - 1].ycor()
             self.body[seg_num].goto(new_x, new_y)
 
-        self.body[0].forward(MOVE_DISTANCE)
+        self.body[0].forward(MOVE_DISTANCE) 
     
     
     def up(self):
